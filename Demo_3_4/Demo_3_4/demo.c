@@ -254,3 +254,303 @@
 //int* parr1[10];// parr1是一个数组，数组有10个元素，每个元素的类型是int*，所以parr1是指针数组
 //int(*parr2)[10];// parr2是一个指针，该指针指向了一个数组，数组10个元素，每个元素的类型是int，parr2是数组指针
 //int(*parr3[10])[5];// parr3是一个数组，有5个元素，每个元素是一个数组指针，该数组指针指向的有5个元素，每个元素是int
+
+
+// 回顾
+
+//int main() 
+//{
+//	// 字符指针
+//	char ch = '2';
+//	char* pc = &ch;
+//	const char* pc2 = "abcdefg";
+//
+//	// 指针数组 - 存放指针的数组
+//	int* arr[10];
+//	char* ch[5];
+//
+//	// 数组指针 - 指向数组的指针
+//	int arr2[5];
+//	//int* pa[5] = &arr2; // 这样pa就和[]组合，成数组了
+//	int(*pa)[5] = &arr2; // 这样pa和*组合，pa就是数组指针
+//	// 指针类型就是int(*)[5]
+//
+//	int(*parr3[10])[5];
+//	
+//	return 0;
+//}
+
+// 数组传参 传数组名，传指针，都没问题
+//
+//void test(int arr[]) 
+//{
+//	// ok?
+//}
+//
+//void test1(int arr[10]) 
+//{
+//	// ok?
+//}
+//
+//void test2(int* arr) 
+//{
+//	// ok?
+//}
+//// 上面基本ok，可以写
+//
+//void test3(int* arr[20]) 
+//{
+//	// ok?
+//}
+//
+//void test4(int** arr) 
+//{
+//	// ok?
+//}
+//
+//int main() 
+//{
+//	int arr[3][5] = { 0 };
+//	return 0;
+//}
+
+//void test(int arr[3][5])
+//{
+//	
+//}
+//
+//// 行是可以不用写的，可以省略掉
+//void test(int arr[][5])
+//{
+//	
+//}
+//
+//void test1(int(*arr)[5]) 
+//{
+//
+//}
+//
+//int main() 
+//{
+//	int arr[3][5] = { 0 };
+//	test(arr);	// 二维数组传参
+//	// 二维数组 讨论其数组名的时候
+//	// 就数组名是首元素地址
+//	// 对于二维数组，就是第一行的地址
+//	test1(arr);
+//	return 0;
+//}
+
+// 指针传参
+//
+//void print(int* p, int sz) 
+//{
+//	int i = 0;
+//	for (i = 0; i < sz; i++) 
+//	{
+//		printf("%d\n", *(p + i));
+//	}
+//}
+//
+//int main() 
+//{
+//	int arr[10] = { 1,2,3,4,5,6,7,8,9,10 };
+//	int* p = arr;
+//	int sz = sizeof(arr) / sizeof(arr[0]);
+//	// 一级指针p，传给函数
+//	print(p, sz);
+//	return 0;
+//}
+
+// 思考
+// 当一个函数的参数部分为一级指针的时候，函数能接收什么参数？
+
+// 比如
+//void test1(int* p) 
+//{
+//	// test1 函数能接收什么参数？
+//}
+//
+//void test2(char* p) 
+//{
+//	// test2 函数能接收什么参数？
+//}
+//
+//int main() 
+//{
+//	int a = 10;
+//	int* p1 = &a;
+//	test1(&a);	// ok
+//	test1(p1);	// ok
+//	char ch = 'w';
+//	char* pc = &ch;
+//	test2(&ch);	// ok
+//	test2(pc);	// ok
+//
+//	return 0;
+//}
+
+
+// 二级指针传参
+
+//void test(int** ptr) 
+//{
+//	printf("num = %d\n", **ptr);
+//}
+//
+//int main() 
+//{
+//	int n = 10;
+//	int* p = &n;
+//	int** pp = &p;
+//	test(pp);
+//	test(&p);
+//	return 0;
+//}
+
+//void test(int** p) // 说明可以传指针数组
+//{
+//	
+//}
+//
+//int main() 
+//{
+//	int* ptr;
+//	int** pp = &ptr;
+//
+//	test(&ptr);
+//	test(pp);
+//
+//	// 传一个数组，说明二级指针参数可以接收指针数组
+//	int* arr[10];
+//	test(arr);
+//	return 0;
+//}
+
+// 数组指针 - 指向数组的指针
+
+// 函数指针 - 说明是指向函数的指针
+
+// 补充：C语言中，函数和类名采用开头大写字母的方式命名
+//int Add(int x, int y) 
+//{
+//	return x + y;
+//}
+//
+//int main() 
+//{
+//	int a = 10;
+//	int b = 20;
+//	//printf("%d\n", Add(a, b));
+//
+//	// &函数名 和 函数名 都是函数的地址
+//	printf("%p\n", &Add);
+//	printf("%p\n", Add);
+//
+//	int (*pa)(int, int) = Add;
+//	printf("%d\n", (*pa)(2, 3));
+//	return 0;
+//}
+
+
+//void Print(char* str) 
+//{
+//	printf("%s\n", str);
+//}
+//
+//int main() 
+//{
+//	void (*p)(char*) = Print;
+//	(*p)("LeBron Jeams");
+//	return 0;
+//}
+
+// 两段有趣代码
+
+//(*(void(*)())0)();
+//(*(   void(*)()   )0)();	// 把0强制类型转换，变成函数指针类型
+//(   *(void(*)())0  )();	// 然后进行解引用
+
+//void (*signal(int, void(*)(int)))(int);
+//      *signal(  int, void(*)(int)  ) -  signal函数名，两个参数 - 
+//void (   *signal(int, void(*)(int))   )(int);
+
+// 《C陷阱与缺陷》
+
+// 复杂 - 进行简化
+
+// 因为以前嘛，就 typedef unsigned int uint;
+// 所以现在
+// 想的时候是这样写：typedef void(*)(int) pflun_t; 但是写不了
+// 只能像下面这样写
+//typedef void(*pflun_t)(int);
+//pflun_t signal(int, pflun_t);
+
+// signal 是一个函数声明
+// signal 函数的参数有两个
+// 第一个是int类型，第二个是函数指针，该函数指针指向的函数的参数是int，返回类型是void
+// signal 函数的返回类型，也是一个函数指针，该函数指针指向的函数参数int，返回类型void
+
+//int Add(int x, int y) 
+//{
+//	return x + y;
+//}
+//
+//int main() 
+//{
+//	int a = 10;
+//	int b = 20;
+//	int (*pa)(int, int) = Add;
+//	printf("%d\n", (*pa)(2, 3));	// 5
+//	printf("%d\n", (**pa)(2, 3));	// 5
+//	printf("%d\n", (***pa)(2, 3));	// 5
+//	// * 是什么意思呢？ 输出都一样
+//	// 说明*放在这里是没什么用的，完全就是摆设
+//	printf("%d\n", (pa)(2, 3));	// 5
+//	// 如果pa是函数指针，我们可以解引用调用它
+//	// 当然，还可以直接使用，不需要解引用
+//	// Add传给了pa，说明pa就是Add，当然可以直接pa调用
+//	// 当然，*也是有意义的，就是解引用来调用函数
+//	// 你想怎样用就怎样用
+//	return 0;
+//}
+
+
+// 函数指针数组
+
+//int Add(int x, int y) 
+//{
+//	return x + y;
+//}
+//int Sub(int x, int y)
+//{
+//	return x - y;
+//}
+//int Mul(int x, int y)
+//{
+//	return x * y;
+//}
+//int Div(int x, int y)
+//{
+//	return x / y;
+//}
+//
+//int main() 
+//{
+//	// 指针数组
+//	int* arr[5];
+//	int (*pa)(int, int) = Add;	//Sub/Mul/Div，这几个函数地址都能存
+//	// 这时，就需要一个数组，这个数组可以存放4个函数地址，这就是函数指针的数组
+//	// 函数指针数组
+//	int(*parr[4])(int, int) = { Add,Sub,Mul,Div };// 函数指针的数组，每个元素都是一个函数指针
+//	int i = 0;
+//	for (i = 0; i < 4; i++) 
+//	{
+//		printf("%d\n", parr[i](2, 3));// 5 -1 6   2除3，商0余2 0
+//	}
+//	return 0;
+//}
+
+char* my_strcpy(char* dest, const char* src);
+// 写一个函数指针pf，能够指向my_strcpy
+// 写一个函数指针数组，能够存放my_strcpy函数的地址
