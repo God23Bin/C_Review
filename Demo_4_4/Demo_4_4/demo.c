@@ -95,3 +95,43 @@
 //	return 0;
 //}
 
+
+char* my_strcat(char* dest, const char* src) 
+{
+	char* rest = dest;
+	assert(dest != NULL);
+	assert(src);
+
+	// 1. 找到目的字符串的'\0'
+	while (*dest != '\0') 
+	{
+		dest++;
+	}
+	// 2. 追加
+	while (*dest++ = *src++) 
+	{
+		;
+	}
+	return rest;
+}
+
+int main() 
+{
+	//char arr1[] = "hello";
+	//char arr2[] = "world";
+
+	//// 把arr2追加到arr1上
+	//strcat(arr1, arr2);
+	//printf("%s\n", arr1);
+	// 会报错，空间不够，上面的写法是错误的
+	// 可以给arr1的大小固定一个大的空间，比如arr1[30]
+	char arr1[30] = "hello\0xxxxxxxxx";
+	char arr2[] = "world";
+
+	// 把arr2追加到arr1上
+	//strcat(arr1, arr2);
+	my_strcat(arr1, arr2);
+	printf("%s\n", arr1);
+	return 0;
+}
+
