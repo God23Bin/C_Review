@@ -421,3 +421,264 @@
 //
 //	return 0;
 //}
+
+
+// strtok
+// char* strtok(char* str, const char* sep);
+
+//int main()
+//{
+//	// 192.168.31.121
+//	// 192 168 31 121 - strtok
+//	// god23bin@qq.com
+//	// god23bin qq com - strtok
+//
+//	char arr[] = "god23bin@qq.com";
+//	char* p = "@."; // 分隔符  字符串
+//	//strtok(arr, p);
+//
+//	// god23bin@qq.com
+//	char buf[1024] = { 0 };
+//	strcpy(buf, arr);
+//	// 切割buf中的字符串
+//
+//	//char* rest = strtok(arr, p);
+//	//printf("%s\n", rest);	//god23bin
+//	//rest = strtok(NULL, p);
+//	//printf("%s\n", rest);	//qq
+//	//rest = strtok(NULL, p);
+//	//printf("%s\n", rest);	//com
+//
+//	// 换下写法
+//
+//	char* rest = NULL;
+//	for (rest = strtok(arr, p); rest != NULL; rest = strtok(NULL, p)) 
+//	{
+//		printf("%s\n", rest);
+//	}
+//	return 0;
+//}
+
+// strerror
+
+//#include <errno.h>
+
+//int main() 
+//{
+//	// 0 - No error
+//	char* str = strerror(0);
+//	printf("%s\n", str);
+//	// 1 - Operation not permitted
+//	char* str = strerror(1);
+//	printf("%s\n", str);
+//	// 2 - No such file or directory
+//	char* str = strerror(2);
+//	printf("%s\n", str);
+//	// ...
+//	// 以上是C语言实现的错误码
+//	// 错误码 - 错误信息
+//
+//	// errno - 是一个全局的错误码的变量
+//	// 当C语言库函数在执行过程中，发生了错误
+//	// 就会把对应的错误码，赋值到errno中
+//	char* str = strerror(errno);
+//	printf("%s\n", str);
+//	return 0;
+//}
+
+//int main() 
+//{
+//	FILE* pf = fopen("test.txt", "r");
+//	if (pf == NULL) 
+//	{
+//		printf("%s\n", strerror(errno));
+//	}
+//	else 
+//	{
+//		printf("open file success\n");
+//	}
+//	return 0;
+//}
+
+
+// 字符分类函数
+
+#include <ctype.h>
+//
+//int main() 
+//{
+//	char ch = 'w';
+//	//int rest = islower(ch);
+//	int rest = isdigit(ch);
+//	printf("%d\n", rest);
+//	return 0;
+//}
+
+// 字符转换函数
+// char tolower(char c);
+// char toupper(char c);
+//int main() 
+//{
+//	char ch1 = tolower('Q');
+//	char ch2 = toupper('q');
+//	putchar(ch1);
+//	putchar(ch2);
+//	return 0;
+//}
+
+
+// 内存函数
+// memcpy
+// memmove
+// memcmp
+// memset
+
+//int main() 
+//{
+//	int arr1[] = { 1,2,3,4,5 };
+//	int arr2[5] = { 0 };
+//	// 把arr1的内容拷贝到arr2中
+//	strcpy(arr2, arr1);
+//	// 那么这里肯定会有警告，因为类型不同
+//	// 不管，直接运行
+//	// 但是，通过Debug，看内存，可以发现实现不了完整的拷贝
+//	// 所以需要内存拷贝
+//	//memcpy
+//	return 0;
+//}
+
+//void* memcpy(void* destination, const void* source, size_t num);
+
+struct S
+{
+	char name[20];
+	int age;
+};
+
+//int main() 
+//{
+//	int arr1[] = { 1,2,3,4,5 };
+//	int arr2[5] = { 0 };
+//
+//	memcpy(arr2, arr1, sizeof(arr1));
+//
+//	struct S arr3[] = { {"LeBron", 36}, {"Kobe", 41} };
+//	struct S arr4[3] = { 0 };
+//
+//	memcpy(arr4, arr3, sizeof(arr3));
+//
+//	return 0;
+//}
+
+// 模拟实现memcpy
+void* my_memcpy(void* dest, const void* src, size_t num) 
+{
+	assert(dest != NULL);
+	assert(src != NULL);
+	void* rest = dest;
+	// void* 不能直接解引用，那么如何复制呢？
+	// 给了num个字节，也就是需要复制num个字节
+	// 那就转换成char*，一个一个字节的复制过去
+	while (num--) 
+	{
+		*(char*)dest = *(char*)src;
+		//++(char*)dest;
+		//++(char*)src;
+		((char*)dest)++;
+		((char*)src)++;
+	}
+	return rest;
+}
+
+//int main() 
+//{
+//	int arr1[] = { 1,2,3,4,5 };
+//	int arr2[5] = { 0 };
+//
+//	my_memcpy(arr2, arr1, sizeof(arr1));
+//
+//	struct S arr3[] = { {"LeBron", 36}, {"Kobe", 41} };
+//	struct S arr4[3] = { 0 };
+//
+//	my_memcpy(arr4, arr3, sizeof(arr3));
+//
+//	return 0;
+//}
+
+//int main() 
+//{
+//	int arr[] = { 1,2,3,4,5,6,7,8,9,10 };
+//	int i = 0;
+//	// 想把12345 拷贝到 34567上去
+//	// 应该打印 1 2 1 2 3 4 5 8 9 10
+//	my_memcpy(arr + 2, arr, 20);
+//
+//	for (i = 0; i < 10; i++) 
+//	{
+//		printf("%d ", arr[i]);
+//	}
+//	// 但是输出 1 2 1 2 1 2 1 8 9 10
+//
+//	// 也就是说，如果拷贝的地方重叠了，那么就会出现这种情况
+//
+//	// 解决：可以从后往前拷
+//	// 但是也不对，不能一概而论
+//
+//	// memmove();可以处理这种重叠拷贝
+//
+//	return 0;
+//}
+
+
+// memmove()
+//int main()
+//{
+//	int arr[] = { 1,2,3,4,5,6,7,8,9,10 };
+//	int i = 0;
+//	// 想把12345 拷贝到 34567上去
+//	// 应该打印 1 2 1 2 3 4 5 8 9 10
+//	memmove(arr + 2, arr, 20);
+//
+//	for (i = 0; i < 10; i++)
+//	{
+//		printf("%d ", arr[i]);
+//	}
+//
+//	return 0;
+//}
+
+// C语言标准：
+// memcpy 只要处理 不重叠的内存拷贝就可以
+// memmove 处理重叠内存的拷贝
+
+
+// 模拟实现memmove
+void* my_memmove(void* dest, void* src, size_t num) 
+{
+	//dest落在了src的左边，前往后拷贝
+	//dest落在了src的右边，同时没有超过那个重叠的边界的时候，从后往前拷贝
+	assert(dest != NULL);
+	assert(src != NULL);
+	void* rest = dest;
+	// void* 不能直接解引用，那么如何复制呢？
+	// 给了num个字节，也就是需要复制num个字节
+	// 那就转换成char*，一个一个字节的复制过去
+	if (dest < src) 
+	{
+		//dest落在了src的左边，前往后拷贝
+		while (num--)
+		{
+			*(char*)dest = *(char*)src;
+			//++(char*)dest;
+			//++(char*)src;
+			((char*)dest)++;
+			((char*)src)++;
+		}
+	}
+	else 
+	{
+
+	}
+	return rest;
+}
+
