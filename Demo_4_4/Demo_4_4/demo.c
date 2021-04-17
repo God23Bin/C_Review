@@ -549,11 +549,11 @@
 
 //void* memcpy(void* destination, const void* source, size_t num);
 
-struct S
-{
-	char name[20];
-	int age;
-};
+//struct S
+//{
+//	char name[20];
+//	int age;
+//};
 
 //int main() 
 //{
@@ -571,24 +571,24 @@ struct S
 //}
 
 // 模拟实现memcpy
-void* my_memcpy(void* dest, const void* src, size_t num) 
-{
-	assert(dest != NULL);
-	assert(src != NULL);
-	void* rest = dest;
-	// void* 不能直接解引用，那么如何复制呢？
-	// 给了num个字节，也就是需要复制num个字节
-	// 那就转换成char*，一个一个字节的复制过去
-	while (num--) 
-	{
-		*(char*)dest = *(char*)src;
-		//++(char*)dest;
-		//++(char*)src;
-		((char*)dest)++;
-		((char*)src)++;
-	}
-	return rest;
-}
+//void* my_memcpy(void* dest, const void* src, size_t num) 
+//{
+//	assert(dest != NULL);
+//	assert(src != NULL);
+//	void* rest = dest;
+//	// void* 不能直接解引用，那么如何复制呢？
+//	// 给了num个字节，也就是需要复制num个字节
+//	// 那就转换成char*，一个一个字节的复制过去
+//	while (num--) 
+//	{
+//		*(char*)dest = *(char*)src;
+//		//++(char*)dest;
+//		//++(char*)src;
+//		((char*)dest)++;
+//		((char*)src)++;
+//	}
+//	return rest;
+//}
 
 //int main() 
 //{
@@ -653,32 +653,62 @@ void* my_memcpy(void* dest, const void* src, size_t num)
 
 
 // 模拟实现memmove
-void* my_memmove(void* dest, void* src, size_t num) 
+//void* my_memmove(void* dest, void* src, size_t num) 
+//{
+//	//dest落在了src的左边，从前往后拷贝
+//	//dest落在了src的右边，同时没有超过那个重叠的边界的时候，从后往前拷贝
+//	assert(dest != NULL);
+//	assert(src != NULL);
+//	void* rest = dest;
+//	// void* 不能直接解引用，那么如何复制呢？
+//	// 给了num个字节，也就是需要复制num个字节
+//	// 那就转换成char*，一个一个字节的复制过去
+//	if (dest < src) 
+//	//if (dest < src || dest > (char*)src + num) 
+//	{
+//		//dest落在了src的左边，从前往后拷
+//		while (num--)
+//		{
+//			*(char*)dest = *(char*)src;
+//			//++(char*)dest;
+//			//++(char*)src;
+//			((char*)dest)++;
+//			((char*)src)++;
+//		}
+//	}
+//	else 
+//	{
+//		// 从后往前拷
+//		// 找到最后一个字节
+//		while (num--) 
+//		{
+//			*((char*)dest + num) = *((char*)src + num);
+//		}
+//
+//	}
+//	return rest;
+//}
+
+
+//memcmp()
+//int main() 
+//{
+//	int arr1[] = { 1,2,3,4,5 };
+//	int arr2[] = { 1,2,5,4,3 };
+//	// 比较前8个字节
+//	int rest = memcmp(arr1, arr2, 8);
+//	printf("%d\n", rest);
+//	// 比较前9个字节
+//	int rest = memcmp(arr1, arr2, 9);
+//	printf("%d\n", rest);
+//	return 0;
+//}
+
+//memset() - 内存设置函数
+int main() 
 {
-	//dest落在了src的左边，前往后拷贝
-	//dest落在了src的右边，同时没有超过那个重叠的边界的时候，从后往前拷贝
-	assert(dest != NULL);
-	assert(src != NULL);
-	void* rest = dest;
-	// void* 不能直接解引用，那么如何复制呢？
-	// 给了num个字节，也就是需要复制num个字节
-	// 那就转换成char*，一个一个字节的复制过去
-	if (dest < src) 
-	{
-		//dest落在了src的左边，前往后拷贝
-		while (num--)
-		{
-			*(char*)dest = *(char*)src;
-			//++(char*)dest;
-			//++(char*)src;
-			((char*)dest)++;
-			((char*)src)++;
-		}
-	}
-	else 
-	{
-
-	}
-	return rest;
+	char arr[10] = "";
+	// 给arr前10个字节，设置成#
+	memset(arr, '#', 10);
+	return 0;
 }
-
